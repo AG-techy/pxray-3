@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paediatric X-ray Teaching Audit – Dr Alakananda Ghosh</title>
+  <meta name="description" content="Audit questionnaire for Paediatric X-ray teaching (Upper Limb, Lower Limb, Normal Variants, Safeguarding).">
+  <style>
+    :root { --accent:#0b74de; --muted:#f5f7fb; --text:#1a1a1a; --border:#e6e9ef; }
+    * { box-sizing: border-box; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin:0; color:var(--text); background:#fff; }
+    header { padding: 28px 20px; background: linear-gradient(180deg, var(--muted), #fff); border-bottom:1px solid var(--border); }
+    .container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+    h1 { margin:0 0 8px; font-size: 28px; }
+    .sub { color:#5b6577; margin:0; }
+    section { margin: 28px 0; padding: 20px; border:1px solid var(--border); border-radius:14px; }
+    h2 { margin:0 0 16px; font-size: 20px; border-bottom: 2px solid var(--accent); padding-bottom: 8px; display:inline-block; }
+    h3 { margin:16px 0 8px; font-size: 16px; }
+    p { margin: 0 0 14px; line-height: 1.6; }
+    small { color:#5b6577; font-size: 12px; }
+
+    /* Form Styles */
+    label { display: block; margin-bottom: 12px; font-weight: 500; }
+    .scale-container { display: flex; justify-content: space-between; margin-bottom: 12px; }
+    .scale-item { text-align: center; cursor: pointer; padding: 8px; border: 1px solid var(--border); border-radius: 6px; flex-grow: 1; margin: 0 4px; transition: all 0.2s; }
+    .scale-item:hover { background: var(--muted); }
+    .scale-item.selected { background: var(--accent); color: white; border-color: var(--accent); }
+    .scale-label { font-size: 12px; margin-top: 4px; color:#5b6577; }
+    .scale-label-selected { font-size: 12px; margin-top: 4px; color:white; }
+    .scale-labels-top { display: flex; justify-content: space-between; margin: 0 4px; font-size: 12px; color:#5b6577; }
+    textarea { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; margin-top: 8px; resize: vertical; min-height: 100px; }
+    input[type="text"] { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; margin-top: 8px; }
+
+    /* Buttons */
+    .button-group { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+    button { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; transition: background-color 0.2s; }
+    #submitBtn { background: var(--accent); color: white; }
+    #submitBtn:hover { background: #085dae; }
+    #exportBtn, #resetBtn { background: #f0f0f0; color: var(--text); border: 1px solid var(--border); }
+    #exportBtn:hover, #resetBtn:hover { background: #e0e0e0; }
+
+    /* Log */
+    #log { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+    #log h2 { border-bottom: none; }
+    #log-container { display: flex; flex-direction: column; gap: 10px; }
+    .log-entry { padding: 10px; border: 1px solid var(--border); border-radius: 6px; background: #f9f9f9; font-size: 14px; white-space: pre-wrap; word-break: break-all; }
+
+    /* QR Code */
+    #qrContainer { text-align: center; margin-top: 20px; padding: 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--muted); }
+    #qr { margin: 10px auto; display: block; background: white; border: 1px solid var(--border); }
+    #qrLink { font-size: 14px; color: var(--accent); word-break: break-all; }
+
+    /* Footer */
+    footer { text-align: center; padding: 20px; margin-top: 40px; border-top: 1px solid var(--border); color:#5b6577; font-size: 14px; }
+
+    /* Utility */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>Paediatric X-ray Teaching Audit</h1>
+      <p class="sub">Dr Alakananda Ghosh (ST4 Paediatric Radiology Fellow)</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section>
+      <h2>Audit Questionnaire</h2>
+      <p>Please use the scales below to rate the teaching you received on paediatric X-ray interpretation (Upper Limb, Lower Limb, Normal Variants, Safeguarding) *before* and *after* the dedicated teaching session.</p>
+
+      <form id="auditForm">
+        <h3>1. Pre-Teaching Confidence</h3>
+        <p class="scale-labels-top"><span>Very Low Confidence</span><span>Very High Confidence</span></p>
+        <div id="pre" class="scale-container">
+          </div>
+
+        <h3>2. Post-Teaching Confidence</h3>
+        <p class="scale-labels-top"><span>Very Low Confidence</span><span>Very High Confidence</span></p>
+        <div id="post" class="scale-container">
+          </div>
+
+        <h3>3. Teaching Feedback</h3>
+        <p class="scale-labels-top"><span>Poor</span><span>Excellent</span></p>
+        <div id="fb" class="scale-container">
+          </div>
+
+        <h3>4. Comments / Suggestions</h3>
+        <textarea id="comments" placeholder="Please provide any additional comments or suggestions for improvement..."></textarea>
+
+        <h3>5. Grade / Specialty</h3>
+        <input type="text" id="grade" placeholder="e.g. ST1 Emergency Medicine, F2 General Surgery" required>
+
+        <div class="button-group">
+          <button type="button" id="submitBtn">Submit Audit Data</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="qrContainer">
+      <h2>Scan to Access</h2>
+      <p>Scan this code to quickly access the audit form on your mobile device:</p>
+      <canvas id="qr" width="128" height="128"></canvas>
+      <a id="qrLink" href="#">[Link to be replaced by JavaScript]</a>
+    </section>
+
+    <section id="log">
+      <h2>Audit Log</h2>
+      <p>All submitted data is stored in your browser's local memory and can be exported as a CSV file.</p>
+      <div id="log-container">
+        <p class="sub">No audit data has been submitted yet.</p>
+      </div>
+      <div class="button-group">
+        <button type="button" id="exportBtn" class="hidden">Export Data (CSV)</button>
+        <button type="button" id="resetBtn">Clear Local Data</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Dr Alakananda Ghosh. All rights reserved.
+  </footer>
+
+  <script>
+    // --- Configuration ---
+    const SURVEY_URL = 'REPLACE_WITH_YOUR_GITHUB_PAGES_URL'; // *** IMPORTANT: Update this URL ***
+    const LOCAL_STORAGE_KEY = 'paed_xray_audit_log';
+    const SCALE_SIZE = 5;
+
+    const preItems = ['1 (Very Low)', '2', '3 (Neutral)', '4', '5 (Very High)'];
+    const postItems = ['1 (Very Low)', '2', '3 (Neutral)', '4', '5 (Very High)'];
+    const fbItems = ['1 (Poor)', '2', '3 (Good)', '4', '5 (Excellent)'];
+
+    // --- Helper Functions ---
+    const qs = (selector) => document.querySelector(selector);
+
+    function buildScale(container, name, labels) {
+      for (let i = 1; i <= SCALE_SIZE; i++) {
+        const item = document.createElement('div');
+        item.classList.add('scale-item');
+        item.dataset.value = i;
+        item.innerHTML = `
+          <strong>${i}</strong>
+          <span class="scale-label">${labels[i - 1]}</span>
+        `;
+        item.addEventListener('click', () => selectScaleItem(container, i));
+        container.appendChild(item);
+      }
+    }
+
+    function selectScaleItem(container, value) {
+      container.querySelectorAll('.scale-item').forEach(item => {
+        item.classList.remove('selected');
+        const label = item.querySelector('.scale-label');
+        if (label) {
+          label.classList.remove('scale-label-selected');
+          label.classList.add('scale-label');
+        }
+      });
+
+      const selectedItem = container.querySelector(`[data-value="${value}"]`);
+      selectedItem.classList.add('selected');
+      const label = selectedItem.querySelector('.scale-label');
+      if (label) {
+        label.classList.remove('scale-label');
+        label.classList.add('scale-label-selected');
+      }
+    }
+
+    function getSelectedValue(containerId) {
+      const selected = qs(`#${containerId} .scale-item.selected`);
+      return selected ? selected.dataset.value : null;
+    }
+
+    function drawSimpleQR(canvas, text) {
+      // Basic, low-fidelity QR code placeholder if QRious is not available
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = '#1a1a1a';
+      ctx.font = '10px sans-serif';
+      const lines = text.match(/.{1,16}/g) || [text];
+      lines.forEach((ln,i)=>ctx.fillText(ln, 6, 20 + i*14));
+      ctx.strokeStyle = '#c9d1e6'; ctx.strokeRect(0.5,0.5,canvas.width-1,canvas.height-1);
+    }
+
+    function loadLog() {
+      const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+      return data ? JSON.parse(data) : [];
+    }
+
+    function saveLog(log) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(log));
+    }
+
+    function renderLog() {
+      const log = loadLog();
+      const container = qs('#log-container');
+      const exportBtn = qs('#exportBtn');
+      container.innerHTML = '';
+
+      if (log.length === 0) {
+        container.innerHTML = '<p class="sub">No audit data has been submitted yet.</p>';
+        exportBtn.classList.add('hidden');
+        return;
+      }
+
+      log.reverse().forEach(entry => {
+        const div = document.createElement('div');
+        div.classList.add('log-entry');
+        div.innerHTML = `
+          <strong>Date:</strong> ${new Date(entry.timestamp).toLocaleString()}<br>
+          <strong>Grade/Specialty:</strong> ${entry.grade}<br>
+          <strong>Pre-Teaching Confidence:</strong> ${entry.pre}<br>
+          <strong>Post-Teaching Confidence:</strong> ${entry.post}<br>
+          <strong>Teaching Feedback:</strong> ${entry.feedback}<br>
+          <strong>Comments:</strong> ${entry.comments || 'N/A'}
+        `;
+        container.appendChild(div);
+      });
+
+      exportBtn.classList.remove('hidden');
+    }
+
+    function handleSubmit() {
+      const pre = getSelectedValue('pre');
+      const post = getSelectedValue('post');
+      const feedback = getSelectedValue('fb');
+      const comments = qs('#comments').value.trim();
+      const grade = qs('#grade').value.trim();
+
+      if (!pre || !post || !feedback || !grade) {
+        alert('Please select a rating for all three scales and enter your Grade/Specialty.');
+        return;
+      }
+
+      const newEntry = {
+        timestamp: new Date().toISOString(),
+        grade: grade,
+        pre: pre,
+        post: post,
+        feedback: feedback,
+        comments: comments
+      };
+
+      const log = loadLog();
+      log.push(newEntry);
+      saveLog(log);
+
+      alert('Audit data submitted successfully! Thank you for your feedback.');
+      document.getElementById('auditForm').reset();
+      qs('#pre').querySelectorAll('.scale-item').forEach(item => item.classList.remove('selected'));
+      qs('#post').querySelectorAll('.scale-item').forEach(item => item.classList.remove('selected'));
+      qs('#fb').querySelectorAll('.scale-item').forEach(item => item.classList.remove('selected'));
+      renderLog();
+    }
+
+    function exportCSV() {
+      const log = loadLog();
+      if (log.length === 0) return;
+
+      const headers = ['Timestamp', 'Grade/Specialty', 'Pre-Teaching Confidence', 'Post-Teaching Confidence', 'Teaching Feedback', 'Comments'];
+      const rows = log.map(e => [
+        new Date(e.timestamp).toLocaleString(),
+        `"${e.grade.replace(/"/g, '""')}"`,
+        e.pre,
+        e.post,
+        e.feedback,
+        `"${e.comments.replace(/"/g, '""')}"`
+      ]);
+
+      let csvContent = headers.join(',') + '\n';
+      rows.forEach(row => {
+        csvContent += row.join(',') + '\n';
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.setAttribute('download', 'paediatric_xray_audit_data.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function resetForm() {
+      if (confirm("Are you sure you want to clear ALL locally stored audit data? This action cannot be undone.")) {
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        renderLog();
+        alert('All local audit data has been cleared.');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Build scales
+      buildScale(qs('#pre'), 'pre', preItems);
+      buildScale(qs('#post'), 'post', postItems);
+      buildScale(qs('#fb'), 'fb', fbItems);
+
+      // Wire buttons
+      document.getElementById('submitBtn').addEventListener('click', handleSubmit);
+      document.getElementById('exportBtn').addEventListener('click', exportCSV);
+      document.getElementById('resetBtn').addEventListener('click', resetForm);
+
+      // Render existing log
+      renderLog();
+
+      // QR
+      document.getElementById('qrLink').textContent = SURVEY_URL;
+      const canvas = document.getElementById('qr');
+      drawSimpleQR(canvas, SURVEY_URL);
+
+      // Year
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.QRious) {
+        new QRious({ element: document.getElementById('qr'), value: SURVEY_URL, size: 128 });
+      }
+    });
+  </script>
+</body>
+</html>
